@@ -38,14 +38,13 @@ public class InputManager : MonoBehaviour
             }
         }
     }
-    private void LateUpdate()
-    {
-        CheckInput();
-    }
-
     private void CheckInput()
     {
         horizontal = Input.GetAxisRaw("Horizontal");
         vertical = Input.GetAxisRaw("Vertical");
+    }
+    private void LateUpdate()
+    {
+        CheckInput();
     }
 }
