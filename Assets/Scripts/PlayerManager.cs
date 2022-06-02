@@ -8,10 +8,50 @@ public class PlayerManager : Character
     private InputManager input;
     public int Lives { get; set; }
     public int Score { get; set; }
+
+    LevelManager LvManager;
+
+    // Start is called before the first frame update
+    void Start()
+    {
+        LvManager = GameObject.FindObjectOfType<LevelManager>();
+        SetStartPos(LvManager.StartPlayerPos);
+        ResetToStartPos();
+        characterName = "player";
+        input = gameObject.AddComponent<InputManager>();
+        Velocity = 1.5f;
+        Lives = 3;
+    }
+    // Update is called once per frame
+    void Update()
+    {
+        SetTargetDir();
+        Move();
+
+    }
     protected override void Death()
     {
-        print(this.name + "Died");
-        Destroy(this.gameObject);        
+        isMoving = false;
+        Lives--;
+        if (Lives <= 0)
+        {
+            print(this.name + "Died");
+            Destroy(this.gameObject);
+        }
+        else
+        {
+            ResetToStartPos();
+            //ResetEnemys
+        }
+
+    }
+    protected override void ResetToStartPos()
+    {
+        transform.position = startPos;
+    }
+    protected override void SetStartPos(Vector3 pos)
+    {
+        startPos = pos;
     }
 
     protected override void Move()
@@ -67,6 +107,7 @@ public class PlayerManager : Character
             if (hit.collider.CompareTag("Grid"))
             {
                 hit.collider.gameObject.GetComponent<GridBehaviour>().IncreaseTimesPressed();
+                LvManager.CheckLvComplete();   
             }
         }
         else
@@ -76,21 +117,8 @@ public class PlayerManager : Character
         return isFalling;
     }    
 
-    // Start is called before the first frame update
-    void Start()
-    {
-        characterName = "player";
-        input = gameObject.AddComponent<InputManager>();
-        Velocity = 2f;
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        SetTargetDir();
-        Move();   
-              
-    }
+    
+    
 
     protected override void SetTargetDir()
     {

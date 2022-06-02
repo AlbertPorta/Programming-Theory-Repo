@@ -4,14 +4,14 @@ using UnityEngine;
 
 public class GridBehaviour : MonoBehaviour
 {
-    bool isComplete = false;
+    public bool IsComplete { get; private set; }    
     [SerializeField]
-    int timesForComplete = 1;
+    int timesForComplete;
     int timesPressed = 0;
     Color[] colors ;
     MeshRenderer mesh;
     
-
+    
     private void Start()
     {
         colors = new Color[1 + timesForComplete];
@@ -31,7 +31,7 @@ public class GridBehaviour : MonoBehaviour
         if (timesForComplete <= timesPressed)
         {
             timesPressed = timesForComplete;
-            isComplete = true;
+            IsComplete = true;
         }
         mesh.material.color = colors[timesPressed];
 
@@ -40,7 +40,7 @@ public class GridBehaviour : MonoBehaviour
     public void DecreaseTimesPressed()
     {
         timesPressed--;
-        isComplete = false;
+        IsComplete = false;
 
         if (timesPressed <= 0)
         {
@@ -49,5 +49,9 @@ public class GridBehaviour : MonoBehaviour
         
         mesh.material.color = colors[timesPressed];
 
+    }
+    public void SetTimesForComplete(int timesFC)
+    {
+        timesForComplete = timesFC;
     }
 }

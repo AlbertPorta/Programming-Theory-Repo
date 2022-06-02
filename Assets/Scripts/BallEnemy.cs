@@ -7,7 +7,7 @@ public class BallEnemy : Enemy
     // Start is called before the first frame update
     protected override void SetTargetDir()    
     {
-        if (isMoving == false)
+        if (isMoving == false && isReborn == false)
         {
             int r = Random.Range(0, 2);
             switch (r)
@@ -22,6 +22,18 @@ public class BallEnemy : Enemy
                     targetDir = Vector3.zero;
                     break;
             }
+        }
+        else if (isReborn == true)
+        {
+            if (startPos.x < 0)
+            {
+                targetDir = new Vector3(1, -1, 0);
+            }
+            else
+            {
+                targetDir = new Vector3(0, -1, -1);
+            }
+                        
         }
     }    
 }

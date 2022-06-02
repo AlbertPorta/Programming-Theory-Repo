@@ -3,68 +3,107 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class Enemy : Character
-{    
+{
+    protected bool isReborn;
+    [SerializeField]
+    protected Vector3[] randomStartPositions;
+    [SerializeField]
+    protected bool enemyBounce;
+    protected Vector3 lastPos;
+
+    protected override void ResetToStartPos()
+    {
+        SetStartPos(StartRandomPos());
+        transform.position = startPos ;
+    }
+    protected override void SetStartPos(Vector3 startpos)
+    {
+        startPos = startpos ;
+    }
+    protected Vector3 StartRandomPos()
+    {
+        int tempInt = Random.Range(0, randomStartPositions.Length);
+        return randomStartPositions[tempInt];
+    }
     protected override void Death()
     {
         print( this.name +  "Died");
-        Destroy(this.gameObject);
+        isReborn = true;
+        deltaTime = 0;
+        ResetToStartPos();
+        
     }
 
     protected override void Move()
     {
-        if (isMoving == false)
+        if (isMoving == false )
         {
             isMoving = true;
+            isReborn = false;
             currentPos = transform.position;
+            lastPos = currentPos;
             targetPos = currentPos + targetDir;
             addYParabola = 0;
             deltaTime = 0;
             transform.LookAt(new Vector3(targetPos.x, transform.position.y, targetPos.z));
         }
 
-        if (transform.position != targetPos && isMoving)
+        deltaTime += Velocity * Time.deltaTime;
+        if (transform.position != targetPos && isMoving && isReborn == false)
         {
-            deltaTime += Velocity * Time.deltaTime;
+            ChechEnemyBounces();
+
             addYParabola = speedYo * deltaTime - ((g * deltaTime * deltaTime) / 2);
             currentPos += targetDir * Velocity * Time.deltaTime;
             transform.position = new Vector3(currentPos.x, currentPos.y + addYParabola, currentPos.z);
 
             if (deltaTime >= 1)
             {
-                if (CheckIfFalling())
-                {
-                    if (deltaTime > 2)
-                    {
-                        Death();
-                    }                    
-                }
-                else
-                {
-                    transform.position = targetPos;
-                }
+                CheckIfFalling();
             }
         }
         else
         {
-            isMoving = false;
+            if (deltaTime >1.5f)
+            {
+                isMoving = false;
+            }            
         }
     }
 
-    private bool CheckIfFalling()
+    private void ChechEnemyBounces()
+    {
+        if (enemyBounce)
+        {
+            targetPos = lastPos;
+            targetDir = (targetPos - currentPos) / (1 - deltaTime);
+            enemyBounce = false;
+        }
+    }
+
+    private void CheckIfFalling()
     {
         bool isFalling;
         //Esta tocando suelo?
         RaycastHit hit;
         
         if (Physics.Raycast(transform.position, transform.TransformDirection(Vector3.down), out hit, 1))
-        {
             isFalling = false;            
+        else 
+            isFalling = true;
+        if (isFalling)
+        {
+            if (deltaTime > 3)
+            {
+                Death();
+            }
         }
         else
         {
-            isFalling = true;
+            transform.position = targetPos;
         }
-        return isFalling;
+
+
     }
     protected override void SetTargetDir()
     {
@@ -73,9 +112,13 @@ public class Enemy : Character
             targetDir = Vector3.zero;
         }
     }
+
     protected virtual void Start()
     {
         Velocity = 1f;
+        ResetToStartPos();
+        isReborn = true;
+        isMoving = true;
     }
     protected virtual void Update()
     {
