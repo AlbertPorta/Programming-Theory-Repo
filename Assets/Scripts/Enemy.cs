@@ -122,8 +122,12 @@ public class Enemy : Character
     }
     protected virtual void Update()
     {
-        SetTargetDir();
-        Move();
+        if (IsPaused == false)
+        {
+            SetTargetDir();
+            Move();
+        }
+        
     }
 }
 

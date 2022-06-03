@@ -42,6 +42,20 @@ public class EnemySpawner : MonoBehaviour
     {
         enemysSpawned.Remove(enemyToRemove);
     }
+    void PauseEnemys()
+    {
+        foreach (Enemy enemy in enemysSpawned)
+        {
+            enemy.IsPaused = true;
+        }
+    }
+    void UnPauseEnemys()
+    {
+        foreach (Enemy enemy in enemysSpawned)
+        {
+            enemy.IsPaused = false;
+        }
+    }
     void SpawnRandomEnemy()
     {
         if (enemysPosSpawn.Count > 0)

@@ -19,6 +19,9 @@ public abstract class Character : MonoBehaviour
     protected float addYParabola;
     public float deltaTime;
 
+    public bool IsPaused;
+
+
     public float Velocity { get => velocity; set => velocity = value; }
 
     protected abstract void ResetToStartPos();

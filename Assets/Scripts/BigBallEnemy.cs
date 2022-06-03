@@ -12,7 +12,19 @@ public class BigBallEnemy : BallEnemy
     protected override void Move()
     {
         CheckIfMetamorfosi();
-        base.Move();
+        if (isMetamorfosi)
+        {
+            deltaTime += Time.deltaTime;
+            if (deltaTime >= 4.5)
+            {
+                Metaforfosi();
+            }
+        }
+        else
+        {
+            base.Move();
+        }
+        
     }
 
     private void CheckIfMetamorfosi()
@@ -30,18 +42,5 @@ public class BigBallEnemy : BallEnemy
         enemySpawner.AddEnemySpawned(newSnake.GetComponent<Enemy>());
         enemySpawner.RemoveEnemySpawned(this);
         Destroy(this.gameObject);
-    }
-    protected override void Update()
-    {
-        if (isMetamorfosi)
-        {
-            deltaTime += Time.deltaTime;
-            if (deltaTime >= 4.5)
-            {
-                Metaforfosi();
-            }
-        }
-        else
-            base.Update();
-    }
+    }    
 }

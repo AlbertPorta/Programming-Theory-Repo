@@ -25,8 +25,12 @@ public class PlayerManager : Character
     // Update is called once per frame
     void Update()
     {
-        SetTargetDir();
-        Move();
+        if (IsPaused == false)
+        {
+            SetTargetDir();
+            Move();
+        }
+        
 
     }
     protected override void Death()
