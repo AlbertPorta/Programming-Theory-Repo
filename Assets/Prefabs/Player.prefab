@@ -111,6 +111,10 @@ MonoBehaviour:
   characterName: 
   velocity: 0.5
   offsetPos: {x: 0, y: 0, z: 0}
+  isMoving: 0
+  startPos: {x: 0, y: 0, z: 0}
   currentPos: {x: 0, y: 0, z: 0}
-  addYParabola: 0
+  targetDir: {x: 0, y: 0, z: 0}
+  targetPos: {x: 0, y: 0, z: 0}
   deltaTime: 0
+  IsPaused: 0

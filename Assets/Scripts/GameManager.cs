@@ -1,28 +1,25 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
+using TMPro;
+using UnityEditor;
 
 public class GameManager : MonoBehaviour
 {
-    public GameObject playerPrefab;
-    GameObject lvManagerGO;
-    LevelManager lvManager;
-    // Start is called before the first frame update
-    void Start()
-    {
-        StartLevel();
+    public string playerName;
 
-    }
-    // Update is called once per frame
-    void Update()
+
+    public void StartGame()
     {
-        
+        SceneManager.LoadScene(1);
     }
-    private void StartLevel()
+    public void Exit()
     {
-        lvManagerGO = new GameObject("Level Manager");
-        lvManager = lvManagerGO.AddComponent<LevelManager>();
-        PlayerManager player = Instantiate(playerPrefab).GetComponent<PlayerManager>();
-        
+#if UNITY_EDITOR
+        EditorApplication.ExitPlaymode();
+#else
+            Application.Quit(); 
+#endif
     }
 }

@@ -13,7 +13,8 @@ GameObject:
   - component: {fileID: 5534144513619242893}
   - component: {fileID: 3155075491646481049}
   - component: {fileID: 6782226705269985668}
-  m_Layer: 0
+  - component: {fileID: -5322757753860851185}
+  m_Layer: 6
   m_Name: Snake
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -113,6 +114,21 @@ MonoBehaviour:
   targetDir: {x: 0, y: 0, z: 0}
   targetPos: {x: 0, y: 0, z: 0}
   deltaTime: 0
+  IsPaused: 0
   randomStartPositions: []
   enemyBounce: 0
   bigBallPrefab: {fileID: 1598799528366372775, guid: aa840e2120f8d67499597dfd2c5d9973, type: 3}
+--- !u!136 &-5322757753860851185
+CapsuleCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1398716867758013837}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  m_Radius: 1.7528731
+  m_Height: 3.1936731
+  m_Direction: 1
+  m_Center: {x: 0.19476466, y: 1.3594525, z: 0.019905983}

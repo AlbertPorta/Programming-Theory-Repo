@@ -11,9 +11,9 @@ GameObject:
   - component: {fileID: 3353170223712135622}
   - component: {fileID: 3353170223712135621}
   - component: {fileID: 3353170223712135620}
-  - component: {fileID: 3353170223712135619}
   - component: {fileID: 3353170223712135623}
-  m_Layer: 0
+  - component: {fileID: -4908550115134330259}
+  m_Layer: 6
   m_Name: EnemyBall
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -83,20 +83,6 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
---- !u!136 &3353170223712135619
-CapsuleCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3353170223712135618}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_Enabled: 1
-  m_Radius: 0.5
-  m_Height: 2
-  m_Direction: 1
-  m_Center: {x: 0, y: 0, z: 0}
 --- !u!114 &3353170223712135623
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -112,10 +98,28 @@ MonoBehaviour:
   characterName: 
   velocity: 0
   offsetPos: {x: 0, y: -0.16, z: 0}
+  isMoving: 0
   startPos: {x: 0, y: 0, z: 0}
   currentPos: {x: 0, y: 0, z: 0}
-  addYParabola: 0
+  targetDir: {x: 0, y: 0, z: 0}
+  targetPos: {x: 0, y: 0, z: 0}
   deltaTime: 0
+  IsPaused: 0
   randomStartPositions:
   - {x: -1, y: 7, z: -1}
   - {x: 1, y: 7, z: 1}
+  enemyBounce: 0
+--- !u!136 &-4908550115134330259
+CapsuleCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3353170223712135618}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  m_Radius: 0.5
+  m_Height: 2
+  m_Direction: 1
+  m_Center: {x: 0, y: 0, z: 0}

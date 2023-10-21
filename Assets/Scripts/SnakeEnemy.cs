@@ -10,6 +10,7 @@ public class SnakeEnemy : Enemy
 
     protected override void Start()
     {
+        characterMask = LayerMask.GetMask("Characters");
         player = FindObjectOfType<PlayerManager>();
         Velocity = 1f;
         isMoving = false;

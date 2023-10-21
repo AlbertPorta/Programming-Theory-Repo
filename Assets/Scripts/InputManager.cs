@@ -5,9 +5,9 @@ using UnityEngine;
 
 public class InputManager : MonoBehaviour
 {
-    private float horizontal;
-    private float vertical;
-    private bool isExitButton;
+    public float horizontal;
+    public float vertical;
+    public bool isExitButton ;
     public Vector3 GetDirection()
     {
         if (horizontal == 0 || vertical == 0)
@@ -40,10 +40,16 @@ public class InputManager : MonoBehaviour
     }
     private void CheckInput()
     {
+        if (Input.GetKeyDown(KeyCode.Escape))
+        {
+            isExitButton = !isExitButton;
+        }
         horizontal = Input.GetAxisRaw("Horizontal");
         vertical = Input.GetAxisRaw("Vertical");
+        
+
     }
-    private void LateUpdate()
+    private void Update()
     {
         CheckInput();
     }

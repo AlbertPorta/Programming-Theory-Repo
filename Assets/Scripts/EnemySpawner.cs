@@ -4,13 +4,13 @@ using UnityEngine;
 
 public class EnemySpawner : MonoBehaviour
 {
-    public GameObject[] enemysPrefabs;
-    public List<Enemy> enemysForThisLv;
-    public List<Enemy> enemysSpawned;
-    public List<int> enemysPosSpawn;
+    private List<Enemy> enemysForThisLv;
+    private List<Enemy> enemysSpawned;
+    private List<int> enemysPosSpawn;
     float timeSpawning;
     [SerializeField]
-    float spawnfreq = 1.5f;
+    float spawnfreq = 3f;
+    bool isPaused;
 
 
     // Start is called before the first frame update
@@ -22,17 +22,31 @@ public class EnemySpawner : MonoBehaviour
 
     private void InitSpawner()
     {
+        enemysSpawned = new List<Enemy>();
         enemysPosSpawn = new List<int>();
         for (int i = 0; i < enemysForThisLv.Count; i++)
         {
-            enemysPosSpawn.Add(i);
+            int randNum = Random.Range(0,enemysForThisLv.Count);
+            while (enemysPosSpawn.Contains(randNum))
+            {
+                randNum = Random.Range(0, enemysForThisLv.Count);
+            }
+            enemysPosSpawn.Add(randNum);
+            timeSpawning = 0;
         }
     }
 
     // Update is called once per frame
     void Update()
     {
-        SpawnRandomEnemy();
+        if (isPaused == false)
+        {
+            SpawnRandomEnemy();
+        }
+    }
+    public void SetLevelEnemys(List<Enemy> levelEnemys)
+    {
+        enemysForThisLv = levelEnemys;
     }
     public void AddEnemySpawned(Enemy enemyToAdd)
     {
@@ -42,19 +56,36 @@ public class EnemySpawner : MonoBehaviour
     {
         enemysSpawned.Remove(enemyToRemove);
     }
-    void PauseEnemys()
+    public void PauseEnemys()
     {
-        foreach (Enemy enemy in enemysSpawned)
+        isPaused = true;
+        if (enemysSpawned != null)
         {
-            enemy.IsPaused = true;
+            foreach (Enemy enemy in enemysSpawned)
+            {
+                enemy.IsPaused = true;
+            }
+        }
+        
+    }
+    public void UnPauseEnemys()
+    {
+        isPaused = false;
+        if (enemysSpawned != null)
+        {
+            foreach (Enemy enemy in enemysSpawned)
+            {
+                enemy.IsPaused = false;
+            }
         }
     }
-    void UnPauseEnemys()
+    public void RestartEnemys()
     {
         foreach (Enemy enemy in enemysSpawned)
         {
-            enemy.IsPaused = false;
+            Destroy(enemy.gameObject);
         }
+        InitSpawner();
     }
     void SpawnRandomEnemy()
     {
@@ -62,11 +93,10 @@ public class EnemySpawner : MonoBehaviour
         {
             timeSpawning +=  Time.deltaTime;
             if (timeSpawning > spawnfreq )
-            {
-                int randomNum = Random.Range(0, enemysPosSpawn.Count);
-                Enemy tempEnemy = Instantiate(enemysForThisLv[randomNum],this.transform);
+            {                
+                Enemy tempEnemy = Instantiate(enemysForThisLv[enemysPosSpawn[0]],this.transform);
                 AddEnemySpawned(tempEnemy);
-                enemysPosSpawn.RemoveAt(randomNum);
+                enemysPosSpawn.RemoveAt(0);
                 timeSpawning = 0;
             }
         }

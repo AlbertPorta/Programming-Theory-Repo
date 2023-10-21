@@ -14,9 +14,9 @@ public class PlayerManager : Character
     // Start is called before the first frame update
     void Start()
     {
+        Lives = 3;
+        SetStartPos(transform.position);
         LvManager = GameObject.FindObjectOfType<LevelManager>();
-        SetStartPos(LvManager.StartPlayerPos);
-        ResetToStartPos();
         characterName = "player";
         input = gameObject.AddComponent<InputManager>();
         Velocity = 1.5f;
@@ -29,9 +29,7 @@ public class PlayerManager : Character
         {
             SetTargetDir();
             Move();
-        }
-        
-
+        }      
     }
     protected override void Death()
     {
@@ -45,9 +43,8 @@ public class PlayerManager : Character
         else
         {
             ResetToStartPos();
-            //ResetEnemys
+            LvManager.RestartLv();
         }
-
     }
     protected override void ResetToStartPos()
     {
@@ -57,10 +54,9 @@ public class PlayerManager : Character
     {
         startPos = pos;
     }
-
     protected override void Move()
     {
-        if (isMoving == false )
+        if ( isMoving == false )
         {            
             isMoving = true;
             currentPos = transform.position;
@@ -68,8 +64,7 @@ public class PlayerManager : Character
             addYParabola = 0;
             deltaTime = 0;
             transform.LookAt(new Vector3(targetPos.x, transform.position.y, targetPos.z));            
-        }     
-        
+        }             
         if (transform.position != targetPos && isMoving)
         {            
             deltaTime += Velocity * Time.deltaTime;
@@ -90,15 +85,13 @@ public class PlayerManager : Character
                 {
                     transform.position = targetPos;
                 }
-            }
-            
+            }            
         }
         else
         {
             isMoving = false;
         }        
     }
-
     private bool CheckIfFalling()
     {
         bool isFalling;
@@ -120,10 +113,6 @@ public class PlayerManager : Character
         }
         return isFalling;
     }    
-
-    
-    
-
     protected override void SetTargetDir()
     {
         if (isMoving == false)

@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 4848857886055490400}
   - component: {fileID: 4848857886055490407}
   - component: {fileID: 4848857886055490403}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: EnemyCat
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -111,13 +111,17 @@ MonoBehaviour:
   characterName: Cat
   velocity: 0
   offsetPos: {x: 0, y: 0, z: 0}
+  isMoving: 0
   startPos: {x: 0, y: 0, z: 0}
   currentPos: {x: 0, y: 0, z: 0}
-  addYParabola: 0
+  targetDir: {x: 0, y: 0, z: 0}
+  targetPos: {x: 0, y: 0, z: 0}
   deltaTime: 0
+  IsPaused: 0
   randomStartPositions:
   - {x: 6, y: 0, z: -1}
   - {x: 5, y: 0, z: -2}
   - {x: 4, y: 0, z: -3}
   - {x: 3, y: 0, z: -4}
   - {x: 2, y: 0, z: -5}
+  enemyBounce: 0

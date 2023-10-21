@@ -10,6 +10,7 @@ public class Enemy : Character
     [SerializeField]
     protected bool enemyBounce;
     protected Vector3 lastPos;
+    protected LayerMask characterMask;
 
     protected override void ResetToStartPos()
     {
@@ -73,6 +74,10 @@ public class Enemy : Character
 
     private void ChechEnemyBounces()
     {
+        
+        //Esta chocando con algo?
+        RaycastHit hit;
+        enemyBounce = Physics.Raycast(transform.position, targetDir, out hit, 0.7f,characterMask);
         if (enemyBounce)
         {
             targetPos = lastPos;
@@ -86,11 +91,9 @@ public class Enemy : Character
         bool isFalling;
         //Esta tocando suelo?
         RaycastHit hit;
-        
-        if (Physics.Raycast(transform.position, transform.TransformDirection(Vector3.down), out hit, 1))
-            isFalling = false;            
-        else 
-            isFalling = true;
+
+        isFalling = !Physics.Raycast(transform.position, transform.TransformDirection(Vector3.down), out hit, 1);
+            
         if (isFalling)
         {
             if (deltaTime > 3)
@@ -115,6 +118,7 @@ public class Enemy : Character
 
     protected virtual void Start()
     {
+        characterMask = LayerMask.GetMask("Characters");
         Velocity = 1f;
         ResetToStartPos();
         isReborn = true;
